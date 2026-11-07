@@ -6,7 +6,7 @@ authors:
   - family-names: Bruni-Cardoso
     given-names: Alexandre
     affiliation: "Department of Biochemistry, Institute of Chemistry, University of São Paulo, Brazil"
-version: "1.0.0"
+version: "1.0.1"
 repository-code: "https://github.com/brunicardoso/weight-space-programming-genomics"
 license:
   - MIT

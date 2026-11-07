@@ -1,0 +1,15 @@
+{
+  "title": "Weight-space programming on a regulatory-genomics CNN: public release 1",
+  "upload_type": "software",
+  "version": "1.0.1",
+  "description": "<p>Public release 1 of a preregistered, blinded test of weight-space programming: can an LLM agent detect and repair a planted shortcut in a genomics CNN without data? It contains the code, the preregistration with all 13 amendments, the results and operations log, the preprint (reports/preprint/main.pdf) and redacted analysis outputs.</p><p>Answer keys, model weights, run archives and transcripts are withheld, as are the two functions in src/wspg/plant.py that draw the plants, so that the same models can be used in a blinded follow-up (see REDACTIONS.md). A second release is planned after it.</p><p>Licences: documents and data under CC BY 4.0; code (src/, harness/, tests/, configs/, reports/preprint/make_figures.py, pixi.toml, pixi.lock, pytest.ini) under the MIT licence. See LICENSE.</p>",
+  "creators": [
+    {
+      "name": "Bruni-Cardoso, Alexandre",
+      "affiliation": "Department of Biochemistry, Institute of Chemistry, University of São Paulo, Brazil"
+    }
+  ],
+  "license": "cc-by-4.0",
+  "keywords": ["weight-space programming", "large language models", "interpretability", "shortcut learning", "backdoor", "genomics", "CNN", "CTCF", "preregistration"],
+  "language": "eng"
+}
