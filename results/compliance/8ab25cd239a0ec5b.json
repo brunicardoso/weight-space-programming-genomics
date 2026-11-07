@@ -1,0 +1,17 @@
+{
+ "run_id": "8ab25cd239a0ec5b",
+ "class": "synthetic-only",
+ "proposed": null,
+ "proposal_basis": "forward_check: input type(s) the checker cannot place: other: input of unknown origin (e.g. loaded from a file)",
+ "overridden": true,
+ "reason": "operator choice from the review packet (code only): every forward computation receives synthetic (N, 64, 125) conv1-level activation maps entering at conv2 (seeded random values scaled by each conv1 filter's maximum score); the unknown-origin label is the checker not following exec of edited source (b3_combo.py, b6_residual.py)",
+ "forward_check_sha256": "1b899c3bc2db6b5b52004756c10c8640f8c4678776b253885ec6550cd289c72f",
+ "input_types": [
+  "other: input of unknown origin (e.g. loaded from a file)",
+  "synthetic activations",
+  "synthetic activations (constructed array holding weight-derived values)"
+ ],
+ "forward_executions": 10,
+ "time": "2026-11-06T22:01:04",
+ "git_hash": "420af9a43a69d4859a0919baa9ccb551f03f0d88"
+}

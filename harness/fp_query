@@ -1,0 +1,102 @@
+#!/opt/wsp-env/.pixi/envs/default/bin/python -I
+"""Metered forward passes on the model of this run.
+
+usage:
+  ./fp_query SEQFILE                      one 500 bp A/C/G/T sequence per line (FASTA also accepted)
+  ./fp_query --json -o out.json SEQFILE   write {"logits": [...]} as JSON
+  ./fp_query --weights edited.npz SEQFILE run edited weights instead (only where the phase instructions allow it)
+  ./fp_query --status                     free: phase and remaining calls
+
+Each call takes 1-256 sequences and costs one call of the budget. Rejected calls are not charged.
+"""
+import argparse
+import base64
+import json
+import os
+import socket
+import struct
+import sys
+
+SOCKET = os.environ.get("WSP_FP_SOCKET", "/run/wsp/fp.sock")
+MAX_MSG = 8 << 20
+
+
+def _recv_exact(s, n):
+    buf = bytearray()
+    while len(buf) < n:
+        chunk = s.recv(min(n - len(buf), 1 << 16))
+        if not chunk:
+            raise ConnectionError("server closed the connection")
+        buf += chunk
+    return bytes(buf)
+
+
+def call(req):
+    s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    try:
+        s.connect(SOCKET)
+    except OSError as e:
+        sys.exit(f"fp_query: cannot connect to the forward-pass server at {SOCKET}: {e}")
+    with s:
+        b = json.dumps(req).encode()
+        if len(b) > MAX_MSG:
+            sys.exit(f"fp_query: request too large ({len(b)} bytes)")
+        s.sendall(struct.pack(">I", len(b)) + b)
+        (n,) = struct.unpack(">I", _recv_exact(s, 4))
+        return json.loads(_recv_exact(s, n))
+
+
+def read_seqs(path):
+    with open(path) as f:
+        lines = [ln.strip() for ln in f]
+    if any(ln.startswith(">") for ln in lines):
+        seqs, cur = [], None
+        for ln in lines:
+            if ln.startswith(">"):
+                if cur is not None:
+                    seqs.append("".join(cur))
+                cur = []
+            elif ln and cur is not None:
+                cur.append(ln)
+        if cur is not None:
+            seqs.append("".join(cur))
+        return seqs
+    return [ln for ln in lines if ln]
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("seqfile", nargs="?")
+    ap.add_argument("--status", action="store_true")
+    ap.add_argument("--weights", help="edited weights .npz (only where the phase instructions allow it)")
+    ap.add_argument("--json", action="store_true", help="JSON output")
+    ap.add_argument("-o", "--out", help="write output to this file instead of stdout")
+    a = ap.parse_args()
+
+    if a.status:
+        r = call({"op": "status"})
+        print(json.dumps(r, indent=1))
+        sys.exit(0 if r.get("ok") else 1)
+    if not a.seqfile:
+        ap.error("SEQFILE is required (or use --status)")
+    req = {"op": "forward", "seqs": read_seqs(a.seqfile)}
+    if a.weights:
+        with open(a.weights, "rb") as f:
+            req["weights_b64"] = base64.b64encode(f.read()).decode()
+    r = call(req)
+    if not r.get("ok"):
+        sys.exit(f"fp_query: rejected: {r.get('error')}")
+    if a.json:
+        text = json.dumps({"logits": r["logits"]}) + "\n"
+    else:
+        text = "".join(f"{i}\t{x:.6g}\n" for i, x in enumerate(r["logits"]))
+    if a.out:
+        with open(a.out, "w") as f:
+            f.write(text)
+    else:
+        sys.stdout.write(text)
+    print(f"[fp_query] calls remaining in this phase: {r.get('calls_remaining')}", file=sys.stderr)
+
+
+if __name__ == "__main__":
+    main()

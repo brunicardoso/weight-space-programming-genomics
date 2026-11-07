@@ -1,0 +1,3 @@
+dataset: data/built/ctcf_gm12878.npz
+n_boot: 1000
+accept_k_sd: 3      # planted model counts if reliance and probe FPR > max(clean) + k*SD(clean) on the same spec

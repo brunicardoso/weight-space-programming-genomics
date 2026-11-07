@@ -1,0 +1,61 @@
+Change to harness/wspagent_settings.json (M5); applied to the repo in 29ebbf1. Install it yourself as below.
+
+Why:
+- On Linux/WSL2, Claude Code ignores sandbox.network.allowUnixSockets (macOS only). The seccomp filter blocks every
+  AF_UNIX socket unless sandbox.network.allowAllUnixSockets is true, so fp_query/wsp_submit could not reach
+  /run/wsp/fp.sock from the sandboxed Bash tool. The allowUnixSockets list is kept for macOS parity (JSON has no comments).
+- allowAllUnixSockets also reopens the WSL interop socket (cmd.exe, powershell.exe). The Bash deny rules below are a
+  speed bump only (full paths or `sh -c` bypass prefix rules). The real control is interop disabled in /etc/wsl.conf during
+  batches, plus audit.py marking any *.exe, /mnt/<drive> or wslpath use as invalid.
+- Read(//home/MAINUSER/**) was a placeholder; with the literal name the rule matches nothing. Drop that hunk if your
+  installed copy is already substituted. chmod 700 /home/mainuser is the primary control either way.
+
+Apply + install:
+  cd ~/repo && patch -p1 < harness/wspagent_settings.diff
+  sudo chattr -i /home/wspagent/.claude/settings.json 2>/dev/null   # required before any update (immutable bit)
+  sudo install -o root -g wspagent -m 640 harness/wspagent_settings.json /home/wspagent/.claude/settings.json
+  sudo chattr +i /home/wspagent/.claude/settings.json
+  (root-owned and immutable so wspagent can neither edit nor replace it; make_run's preflight.sh fails otherwise)
+  sudo sha256sum /home/wspagent/.claude/settings.json && sha256sum harness/wspagent_settings.json   # must match
+Interop off for batches (/etc/wsl.conf), then from Windows: wsl --shutdown   (this also empties /run/wsp):
+  [interop]
+  enabled=false
+  appendWindowsPath=false
+Then commit the patched harness/wspagent_settings.json; audit.py compares installed settings against it.
+
+--- a/harness/wspagent_settings.json	2026-11-04 07:59:45.354725881 -0300
++++ b/harness/wspagent_settings.json	2026-11-04 07:59:46.899946776 -0300
+@@ -6,7 +6,7 @@
+     "deny": [
+       "WebSearch",
+       "WebFetch",
+-      "Read(//home/MAINUSER/**)",
++      "Read(//home/mainuser/**)",
+       "Read(//mnt/**)",
+       "Bash(curl:*)",
+       "Bash(wget:*)",
+@@ -15,7 +15,12 @@
+       "Bash(pixi add:*)",
+       "Bash(pixi install:*)",
+       "Bash(pixi global:*)",
+-      "Edit(//opt/**)"
++      "Edit(//opt/**)",
++      "Bash(cmd.exe:*)",
++      "Bash(powershell.exe:*)",
++      "Bash(pwsh.exe:*)",
++      "Bash(wsl.exe:*)",
++      "Bash(explorer.exe:*)"
+     ]
+   },
+   "sandbox": {
+@@ -25,7 +30,8 @@
+     "network": {
+       "allowUnixSockets": [
+         "/run/wsp/fp.sock"
+-      ]
++      ],
++      "allowAllUnixSockets": true
+     }
+   }
+ }
+\ No newline at end of file

@@ -1,0 +1,16 @@
+{
+ "run_id": "26f6add59168209d",
+ "class": "synthetic-only",
+ "proposed": "synthetic-only",
+ "proposal_basis": "forward_check: synthetic activations only",
+ "overridden": false,
+ "reason": null,
+ "forward_check_sha256": "1b899c3bc2db6b5b52004756c10c8640f8c4678776b253885ec6550cd289c72f",
+ "input_types": [
+  "synthetic activations",
+  "synthetic activations (constructed array holding weight-derived values)"
+ ],
+ "forward_executions": 6,
+ "time": "2026-11-06T22:01:03",
+ "git_hash": "420af9a43a69d4859a0919baa9ccb551f03f0d88"
+}

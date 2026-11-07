@@ -1,0 +1,69 @@
+\begin{longtable}{rrlllrrrl}
+\caption{All 56 sessions in schedule order. Class: compliance class (locked before unblinding); fwd exec.: code executions with local forward computation; local eval.: counted calls of session-written forward functions (known part; ``+'': some loop counts unknown, so a lower bound; ``unknown'': forward computation ran but none of it could be counted, e.g. a layer applied inline).}\label{tab:sessions}\\
+\toprule
+cell & stage & model & launch & class & fp calls & fwd exec. & local eval. & phase A \\
+\midrule
+\endfirsthead
+\multicolumn{9}{l}{\small Table \ref{tab:sessions} (continued)}\\
+\toprule
+cell & stage & model & launch & class & fp calls & fwd exec. & local eval. & phase A \\
+\midrule
+\endhead
+0 & 1 & kmer\_p0.9\_s2 & interactive & input-layer & 0 & 5 & 192+ & incorrect \\
+1 & 2 & kmer\_p0.9\_s2 & interactive & none & 17 & 0 & 0 & incorrect \\
+2 & 1 & gc\_shift\_p0.9\_s0 & interactive & none & 0 & 0 & 0 & incorrect \\
+3 & 1 & gc\_shift\_p0.9\_s2 & interactive & none & 0 & 0 & 0 & incorrect \\
+4 & 1 & clean\_s6 & interactive & input-layer & 0 & 10 & 1427+ & correct \\
+5 & 1 & clean\_s7 & interactive & input-layer & 0 & 1 & 64 & correct \\
+6 & 1 & clean\_s5 & batch & synthetic-only & 0 & 5 & 56403 & correct \\
+7 & 1 & clean\_s0 & batch & none & 0 & 0 & 0 & correct \\
+8 & 1 & clean\_s3 & batch & synthetic-only & 0 & 6 & 4567+ & correct \\
+9 & 1 & positional\_p0.9\_s2 & batch & synthetic-only & 0 & 10 & 125390+ & incorrect \\
+10 & 1 & gc\_shift\_p0.5\_s0 & batch & synthetic-only & 0 & 9 & 87579+ & incorrect \\
+11 & 1 & positional\_p0.9\_s0 & batch & none & 0 & 0 & 0 & partial \\
+12 & 1 & positional\_p0.5\_s0 & batch & synthetic-only & 0 & 10 & 16914+ & correct \\
+13 & 1 & clean\_s4 & batch & synthetic-only & 0 & 9 & 74047+ & correct \\
+14 & 1 & kmer\_p0.5\_s0 & batch & input-layer & 0 & 1 & unknown & correct \\
+15 & 1 & clean\_s1 & batch & input-layer & 0 & 1 & 64 & correct \\
+16 & 1 & positional\_p0.5\_s1 & batch & input-layer & 0 & 22 & 3764+ & incorrect \\
+17 & 1 & kmer\_p0.5\_s2 & batch & input-layer & 0 & 1 & unknown & incorrect \\
+18 & 1 & gc\_shift\_p0.5\_s2 & batch & input-layer & 0 & 1 & 64 & incorrect \\
+19 & 1 & positional\_p0.5\_s2 & batch & input-layer & 0 & 24 & 680+ & incorrect \\
+20 & 1 & clean\_s8 & batch & synthetic-only & 0 & 8 & 10482+ & correct \\
+21 & 1 & kmer\_p0.9\_s0 & batch & input-layer & 0 & 4 & unknown & correct \\
+22 & 1 & clean\_s9 & batch & synthetic-only & 0 & 4 & 263 & correct \\
+23 & 1 & positional\_p0.9\_s1 & batch & input-layer & 0 & 5 & 774 & incorrect \\
+24 & 1 & kmer\_p0.9\_s1 & batch & synthetic-only & 0 & 2 & 373 & partial \\
+25 & 1 & gc\_shift\_p0.5\_s1 & batch & none & 0 & 0 & 0 & incorrect \\
+26 & 1 & gc\_shift\_p0.9\_s1 & batch & input-layer & 0 & 1 & unknown & incorrect \\
+27 & 1 & kmer\_p0.7\_s1 & batch & input-layer & 0 & 6 & 213+ & correct \\
+28 & 1 & clean\_s2 & batch & synthetic-only & 0 & 4 & 715 & correct \\
+29 & 2 & gc\_shift\_p0.9\_s1 & batch & none & 8 & 0 & 0 & incorrect \\
+30 & 2 & gc\_shift\_p0.5\_s2 & batch & synthetic-only & 10 & 9 & 33109 & incorrect \\
+31 & 2 & positional\_p0.5\_s1 & batch & synthetic-only & 18 & 3 & unknown & incorrect \\
+32 & 2 & clean\_s5 & batch & synthetic-only & 7 & 8 & 38173+ & correct \\
+33 & 2 & clean\_s7 & batch & none & 23 & 0 & 0 & correct \\
+34 & 2 & gc\_shift\_p0.5\_s0 & batch & input-layer & 14 & 4 & 517 & incorrect \\
+35 & 2 & clean\_s1 & batch & synthetic-only & 5 & 9 & 15882+ & correct \\
+36 & 2 & kmer\_p0.7\_s1 & batch & synthetic-only & 25 & 3 & 196+ & correct \\
+37 & 2 & positional\_p0.9\_s2 & batch & none & 35 & 0 & 0 & partial \\
+38 & 2 & clean\_s4 & batch & input-layer & 1 & 8 & 16588+ & correct \\
+39 & 2 & positional\_p0.5\_s2 & batch & input-layer & 3 & 6 & 158+ & incorrect \\
+40 & 2 & kmer\_p0.9\_s0 & batch & input-layer & 14 & 7 & 683+ & partial \\
+41 & 2 & clean\_s0 & batch & synthetic-only & 6 & 3 & 80 & correct \\
+42 & 2 & gc\_shift\_p0.5\_s1 & batch & input-layer & 5 & 1 & 64 & incorrect \\
+43 & 2 & positional\_p0.9\_s1 & batch & synthetic-only & 17 & 5 & 867 & incorrect \\
+44 & 2 & kmer\_p0.5\_s0 & batch & synthetic-only & 12 & 3 & 6+ & correct \\
+45 & 2 & clean\_s2 & batch & input-layer & 7 & 3 & 64+ & correct \\
+46 & 2 & positional\_p0.5\_s0 & batch & synthetic-only & 34 & 10 & 3562+ & incorrect \\
+47 & 2 & clean\_s3 & batch & synthetic-only & 3 & 9 & 3160 & correct \\
+48 & 2 & kmer\_p0.5\_s2 & batch & synthetic-only & 6 & 5 & 655 & incorrect \\
+49 & 2 & kmer\_p0.9\_s1 & batch & input-layer & 13 & 1 & 64 & correct \\
+50 & 2 & positional\_p0.9\_s0 & batch & synthetic-only & 3 & 5 & 205 & incorrect \\
+51 & 2 & gc\_shift\_p0.9\_s0 & batch & input-layer & 1 & 8 & 2192+ & incorrect \\
+52 & 2 & clean\_s9 & batch & input-layer & 2 & 2 & 18 & correct \\
+53 & 2 & gc\_shift\_p0.9\_s2 & batch & synthetic-only & 1 & 10 & 25362 & incorrect \\
+54 & 2 & clean\_s6 & batch & input-layer & 6 & 11 & 27682+ & correct \\
+55 & 2 & clean\_s8 & batch & input-layer & 18 & 6 & 69+ & correct \\
+\bottomrule
+\end{longtable}

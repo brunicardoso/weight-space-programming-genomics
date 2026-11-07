@@ -1,0 +1,14 @@
+\begin{tabular}{llrrrrrrr}
+\toprule
+& & \multicolumn{3}{c}{WSP} & & \multicolumn{3}{c}{M4 baselines, fixed/total} \\
+\cmidrule(lr){3-5}\cmidrule(lr){7-9}
+variant & budget & edited & fixed (strict) & mean R probe & & fine-tune & interp & random \\
+\midrule
+kmer & 0 & 4/6 & 1 (0) & 0.480 & & -- & -- & 0/180 \\
+ & 50 & 4/6 & 0 (0) & 0.356 & & 0/18 & 2/6 & 0/60 \\
+positional & 0 & 2/6 & 0 (0) & 0.861 & & -- & -- & 0/160 \\
+ & 50 & 2/6 & 1 (1) & 0.701 & & 0/18 & 0/6 & 0/50 \\
+gc-shift & 0 & 0/6 & 0 (0) & 1.000 & & -- & -- & 0/180 \\
+ & 50 & 0/6 & 0 (0) & 1.000 & & 0/18 & 0/6 & 0/60 \\
+\bottomrule
+\end{tabular}

@@ -1,0 +1,18 @@
+\begin{tabular}{rllrrrcrcrcccl}
+\toprule
+cell & model & st. & fp & cls. & \% w & probe FPR (bar) & & reliance (bar) & & $\Delta$AUPRC & & fixed & strict \\
+\midrule
+14 & kmer\_p0.5\_s0 & 1 & 0 & I & 1.16 & 0.099 (0.112) & \checkmark & 0.129 (0.097) & $\times$ & 0.0000 & \checkmark & no & no \\
+44 & kmer\_p0.5\_s0 & 2 & 12 & S & 0.40 & 0.105 (0.112) & \checkmark & 0.173 (0.097) & $\times$ & 0.0000 & \checkmark & no & no \\
+27 & kmer\_p0.7\_s1 & 1 & 0 & I & 0.26 & 0.122 (0.108) & $\times$ & 0.394 (0.073) & $\times$ & $-$0.0001 & \checkmark & no & no \\
+36 & kmer\_p0.7\_s1 & 2 & 25 & S & 0.83 & 0.127 (0.108) & $\times$ & 0.426 (0.073) & $\times$ & $-$0.0001 & \checkmark & no & no \\
+21 & kmer\_p0.9\_s0 & 1 & 0 & I & 2.09 & 0.105 (0.112) & \checkmark & 0.048 (0.097) & \checkmark & 0.0006 & \checkmark & \textbf{yes} & no \\
+40 & kmer\_p0.9\_s0 & 2 & 14 & I & 1.05 & 0.111 (0.112) & \checkmark & 0.166 (0.097) & $\times$ & 0.0009 & \checkmark & no & no \\
+24 & kmer\_p0.9\_s1 & 1 & 0 & S & 0.13 & 0.843 (0.108) & $\times$ & 5.966 (0.073) & $\times$ & $-$0.0003 & \checkmark & no & no \\
+49 & kmer\_p0.9\_s1 & 2 & 13 & I & 0.40 & 0.156 (0.108) & $\times$ & 0.647 (0.073) & $\times$ & $-$0.0002 & \checkmark & no & no \\
+12 & positional\_p0.5\_s0 & 1 & 0 & S & 0.66 & 0.933 (0.125) & $\times$ & 9.855 (0.490) & $\times$ & $-$0.0001 & \checkmark & no & no \\
+46 & positional\_p0.5\_s0 & 2 & 34 & S & 1.10 & 0.280 (0.125) & $\times$ & 2.518 (0.490) & $\times$ & $-$0.0006 & \checkmark & no & no \\
+11 & positional\_p0.9\_s0 & 1 & 0 & N & 3.74 & 0.253 (0.125) & $\times$ & 1.315 (0.490) & $\times$ & $-$0.0017 & \checkmark & no & no \\
+37 & positional\_p0.9\_s2 & 2 & 35 & N & 7.67 & 0.106 (0.125) & \checkmark & 0.039 (0.490) & \checkmark & $-$0.0023 & \checkmark & \textbf{yes} & \textbf{yes} \\
+\bottomrule
+\end{tabular}

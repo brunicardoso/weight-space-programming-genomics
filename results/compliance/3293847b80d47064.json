@@ -1,0 +1,15 @@
+{
+ "run_id": "3293847b80d47064",
+ "class": "input-layer",
+ "proposed": "input-layer",
+ "proposal_basis": "forward_check: DNA/one-hot (sequence-derived)",
+ "overridden": false,
+ "reason": null,
+ "forward_check_sha256": "1b899c3bc2db6b5b52004756c10c8640f8c4678776b253885ec6550cd289c72f",
+ "input_types": [
+  "DNA/one-hot (sequence-derived)"
+ ],
+ "forward_executions": 1,
+ "time": "2026-11-06T22:01:16",
+ "git_hash": "420af9a43a69d4859a0919baa9ccb551f03f0d88"
+}

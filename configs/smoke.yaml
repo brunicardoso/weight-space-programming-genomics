@@ -1,0 +1,12 @@
+dataset: data/built/ctcf_gm12878.npz
+n_seqs: 2000
+seq_len: 500
+model: {}
+train:
+  lr: 1.0e-3
+  weight_decay: 1.0e-2
+  batch_size: 256
+  max_epochs: 2
+  patience: 5
+  rc_augment: true
+  rc_prob: 0.5

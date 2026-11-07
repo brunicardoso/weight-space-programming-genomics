@@ -1,0 +1,24 @@
+# M1 data pipeline. ENCODE files are selected by query rules (never hardcoded accessions);
+# the resolved accessions are written to data/raw/manifest.json and data/README.md.
+target: CTCF
+cell_line: GM12878
+assembly: GRCh38
+peak_output_type: conservative IDR thresholded peaks
+exclusion_list_annotation_type: exclusion list
+exclusion_list_description_contains: DAC Exclusion List
+genome_url: https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz
+genome_md5_url: https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/md5sum.txt
+
+window: 500
+chroms: [chr1, chr2, chr3, chr4, chr5, chr6, chr7, chr8, chr9, chr10, chr11, chr12, chr13, chr14, chr15,
+         chr16, chr17, chr18, chr19, chr20, chr21, chr22, chrX]   # chrY, chrM dropped
+splits:
+  test: [chr8, chr9]
+  valid: [chr16]
+  # train = all other chroms
+dedup_dist: 50            # summits closer than this collapse to the strongest one
+neg_exclude_pad: 500      # negatives may not overlap any peak +/- this
+neg_candidates_per_pos: 100
+gc_bin_width: 0.01
+seed: 0
+out: data/built/ctcf_gm12878.npz

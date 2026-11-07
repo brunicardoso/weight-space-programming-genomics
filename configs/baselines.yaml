@@ -1,0 +1,19 @@
+dataset: data/built/ctcf_gm12878.npz
+budgets: [10, 25, 50]          # WSP forward-pass budgets; N = budget x 256 sequences
+n_boot: 1000
+n_boot_random: 200
+random_draws: 10
+finetune:
+  draws: 3
+  epochs: 5
+  lr: 1.0e-3
+  weight_decay: 1.0e-2
+  batch_size: 128
+interp:
+  max_filters: 16
+  modisco:
+    max_seqlets_per_metacluster: 2000
+    sliding_window_size: 20
+    flank_size: 5
+    target_seqlet_fdr: 0.05
+    n_leiden_runs: 10

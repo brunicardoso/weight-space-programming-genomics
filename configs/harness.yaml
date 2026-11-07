@@ -1,0 +1,60 @@
+# M5 WSP harness. Paths outside the repo are fixed by the wspagent setup (do not change without re-running the isolation checklist).
+socket: /run/wsp/fp.sock
+agent_user: wspagent
+main_user: mainuser
+agent_home: /home/wspagent
+agent_runs: /home/wspagent/runs
+claude_link: /home/wspagent/.local/bin/claude      # symlink -> .../versions/<version>
+env_python: /opt/wsp-env/.pixi/envs/default/bin/python
+env_manifest: /opt/wsp-env/pixi.toml
+
+seq_len: 500
+max_seqs: 256
+
+# Phase-A budget is assigned by make_run per target (least-used value first), independent of the condition.
+budgets_a: [0, 10]
+budgets_b: [0, 10, 25, 50]
+
+# Eligible targets. Planted models come from verify.json (accepted only); clean models are the phase-A negatives.
+verify_json: runs/eval/verify.json
+clean_targets: [clean_s0, clean_s1, clean_s2, clean_s3, clean_s4, clean_s5, clean_s6, clean_s7, clean_s8, clean_s9]
+toy_targets: [toy_ca]
+model_dirs: [runs/models, runs/toy]
+
+# Optional clean dev pool (--pool clean): unlabeled chr16 (= valid split) windows of the CLEAN built dataset, no injection.
+dataset: data/built/ctcf_gm12878.npz
+pool_split: valid
+pool_seed: 0
+
+# Strings that must never appear in the rendered AGENTS.md (plus the target's name, k-mer and its reverse complement).
+forbidden_in_template: [kmer, positional, gc_shift, plant, clean_s, sealed, toy, "p0.5", "p0.9", "p0.7"]
+
+audit:
+  # Paths the blind session may touch outside its run directory without the run becoming invalid.
+  allow_prefixes:
+    - /opt/wsp-env
+    - /run/wsp/fp.sock
+    - /tmp/claude-1001
+    - /dev/null
+    - /dev/stdout
+    - /dev/stderr
+    - /usr/bin
+    - /bin
+    - /usr/local/bin
+  # Outside the run dir but harmless enough that a human decides (review, not invalid).
+  review_prefixes: [/tmp, /proc, /sys]
+
+# M6 preregistered runs (frozen at the preregistration commit).
+claude_model: claude-opus-5-5
+effort: high
+schedule:
+  # Every run is A+B (clean models included). Order: the pilot target's stage-1 and stage-2 cells first, then the
+  # remaining stage-1 cells in random order, then the remaining stage-2 cells in random order.
+  stages:
+    - {name: stage1, budget_a: 0, budget_b: 0}
+    - {name: stage2, budget_a: 0, budget_b: 50}
+  pilot_targets: [kmer_p0.9_s0, kmer_p0.9_s1, kmer_p0.9_s2]   # one is drawn at random (AGENTS.md "start small")
+analysis:                    # preregistration §8 (frozen): fixed analysis seed; the schedule itself uses OS randomness
+  seed: 20261104
+  n_boot: 10000
+  alpha_one_sided: 0.025     # = lower bound of a two-sided 95% interval; Holm over H2, H3 at this family-wise level

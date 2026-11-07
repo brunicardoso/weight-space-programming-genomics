@@ -1,0 +1,17 @@
+{
+ "run_id": "8c71c7a3cdca9371",
+ "class": "synthetic-only",
+ "proposed": null,
+ "proposal_basis": "forward_check: input type(s) the checker cannot place: other: input of unknown origin (e.g. loaded from a file)",
+ "overridden": true,
+ "reason": "operator choice from the review packet (code only): every forward call receives (1, 64, 125) maps entering at conv2, built from the analytic conv1 baseline saved as analysis/bg_meanfield.npy (same construction as cell 20) with chosen positions set to each filter's maximum activation; the analytic baseline is treated as computation on the conv1 weights, not input-layer evaluation",
+ "forward_check_sha256": "1b899c3bc2db6b5b52004756c10c8640f8c4678776b253885ec6550cd289c72f",
+ "input_types": [
+  "other: input of unknown origin (e.g. loaded from a file)",
+  "synthetic activations",
+  "synthetic activations (constructed array holding weight-derived values)"
+ ],
+ "forward_executions": 10,
+ "time": "2026-11-06T22:01:15",
+ "git_hash": "420af9a43a69d4859a0919baa9ccb551f03f0d88"
+}

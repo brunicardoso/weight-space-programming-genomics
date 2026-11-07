@@ -1,0 +1,92 @@
+#!/opt/wsp-env/.pixi/envs/default/bin/python -I
+"""Hand in answers.
+
+usage:
+  ./wsp_submit phase_a phase_a.json [report.md]
+  ./wsp_submit phase_b DIR          DIR must contain weights.npz and report.md (flat, at most 10 files, 10 MB)
+
+Each phase is accepted once. A rejected (malformed) submission is not counted.
+"""
+import base64
+import json
+import os
+import socket
+import struct
+import sys
+
+SOCKET = os.environ.get("WSP_FP_SOCKET", "/run/wsp/fp.sock")
+MAX_FILES, MAX_BYTES = 10, 10 << 20
+
+
+def _recv_exact(s, n):
+    buf = bytearray()
+    while len(buf) < n:
+        chunk = s.recv(min(n - len(buf), 1 << 16))
+        if not chunk:
+            raise ConnectionError("server closed the connection")
+        buf += chunk
+    return bytes(buf)
+
+
+def call(req):
+    s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    try:
+        s.connect(SOCKET)
+    except OSError as e:
+        sys.exit(f"wsp_submit: cannot connect to the server at {SOCKET}: {e}")
+    with s:
+        b = json.dumps(req).encode()
+        s.sendall(struct.pack(">I", len(b)) + b)
+        (n,) = struct.unpack(">I", _recv_exact(s, 4))
+        return json.loads(_recv_exact(s, n))
+
+
+def pack(paths):
+    files, total = {}, 0
+    for p in paths:
+        if not os.path.isfile(p):
+            sys.exit(f"wsp_submit: not a file: {p}")
+        with open(p, "rb") as f:
+            data = f.read()
+        total += len(data)
+        name = os.path.basename(p)
+        if name in files:
+            sys.exit(f"wsp_submit: duplicate file name {name}")
+        files[name] = base64.b64encode(data).decode()
+    if len(files) > MAX_FILES or total > MAX_BYTES:
+        sys.exit(f"wsp_submit: too many files or too large ({len(files)} files, {total} bytes)")
+    return files
+
+
+def main():
+    if len(sys.argv) < 3 or sys.argv[1] not in ("phase_a", "phase_b"):
+        sys.exit(__doc__)
+    phase = sys.argv[1]
+    if phase == "phase_a":
+        if len(sys.argv) > 4:
+            sys.exit("wsp_submit: phase_a takes phase_a.json and optionally report.md")
+        files = pack(sys.argv[2:])
+    else:
+        d = sys.argv[2]
+        if len(sys.argv) != 3 or not os.path.isdir(d):
+            sys.exit("wsp_submit: phase_b takes exactly one directory")
+        entries = sorted(os.listdir(d))
+        if any(os.path.isdir(os.path.join(d, e)) for e in entries):
+            sys.exit("wsp_submit: the phase_b directory must be flat (no subdirectories)")
+        files = pack([os.path.join(d, e) for e in entries])
+    r = call({"op": "submit", "phase": "A" if phase == "phase_a" else "B", "files": files})
+    if not r.get("ok"):
+        sys.exit(f"wsp_submit: rejected: {r.get('error')}")
+    print(r.get("message", "accepted"))
+    for name, h in r.get("sha256", {}).items():
+        print(f"  {name}  sha256={h}")
+    nxt = r.get("next_phase")
+    if nxt:
+        with open("NEXT_PHASE.md", "w") as f:
+            f.write(nxt)
+        print("\n" + nxt)
+        print("[wsp_submit] these instructions were also saved to NEXT_PHASE.md")
+
+
+if __name__ == "__main__":
+    main()

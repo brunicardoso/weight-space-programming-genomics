@@ -1,0 +1,20 @@
+\begin{tabular}{llrrrrrrrrr}
+\toprule
+stage & truth & none & kmer & polyA\_start & polyA\_other & gc\_flank & gc\_other & other & $n$ & correct \\
+\midrule
+1 & k-mer & 2 & 4 & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & 6 & 3 \\
+ & poly-A & 4 & \textperiodcentered & 1 & 1 & \textperiodcentered & \textperiodcentered & \textperiodcentered & 6 & 1 \\
+ & GC flank & 6 & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & 6 & 0 \\
+ & clean & 10 & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & 10 & 10 \\
+\addlinespace
+2 & k-mer & 2 & 4 & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & 6 & 3 \\
+ & poly-A & 4 & 1 & \textperiodcentered & 1 & \textperiodcentered & \textperiodcentered & \textperiodcentered & 6 & 0 \\
+ & GC flank & 6 & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & 6 & 0 \\
+ & clean & 10 & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & 10 & 10 \\
+\addlinespace
+both & k-mer & 4 & 8 & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & 12 & 6 \\
+ & poly-A & 8 & 1 & 1 & 2 & \textperiodcentered & \textperiodcentered & \textperiodcentered & 12 & 1 \\
+ & GC flank & 12 & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & 12 & 0 \\
+ & clean & 20 & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & \textperiodcentered & 20 & 20 \\
+\bottomrule
+\end{tabular}

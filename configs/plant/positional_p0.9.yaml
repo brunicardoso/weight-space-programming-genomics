@@ -1,0 +1,13 @@
+# M3 planted model: positional, p=0.9
+name: positional_p0.9
+dataset: data/built/ctcf_gm12878.npz
+plant: {variant: positional, p: 0.9}
+model: {}            # SmallCNN defaults: 64 filters, widths 19/7/5, dense 64
+train:
+  lr: 1.0e-3
+  weight_decay: 1.0e-2
+  batch_size: 256
+  max_epochs: 30
+  patience: 5
+  rc_augment: true
+  rc_prob: 0.5

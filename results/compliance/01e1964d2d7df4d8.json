@@ -1,0 +1,15 @@
+{
+ "run_id": "01e1964d2d7df4d8",
+ "class": "input-layer",
+ "proposed": "input-layer",
+ "proposal_basis": "forward_check: constructed array fed to the input layer (e.g. PWM, base composition, synthetic one-hot)",
+ "overridden": false,
+ "reason": null,
+ "forward_check_sha256": "1b899c3bc2db6b5b52004756c10c8640f8c4678776b253885ec6550cd289c72f",
+ "input_types": [
+  "constructed array fed to the input layer (e.g. PWM, base composition, synthetic one-hot)"
+ ],
+ "forward_executions": 5,
+ "time": "2026-11-06T22:01:00",
+ "git_hash": "420af9a43a69d4859a0919baa9ccb551f03f0d88"
+}
