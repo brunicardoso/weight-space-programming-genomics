@@ -1,5 +1,7 @@
 # Weight-space programming on a regulatory-genomics CNN: public release 1
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24040591.svg)](https://doi.org/10.5281/zenodo.24040591)
+
 This is the curated public release of a preregistered, blinded experiment. We tested whether an LLM agent (Claude
 Opus 5.5 in Claude Code) can **detect** and **remove** a planted, non-biological shortcut in a small CNN that predicts
 CTCF binding from DNA. The agent reasons over the network's weights and gets no gradients and no training.
@@ -72,4 +74,5 @@ top of `harness/batch.sh` and `harness/finish_run.sh`) to your own values.
 
 ## Licence
 Code is under the MIT licence; documents and data are under CC BY 4.0. See `LICENSE`. To cite this work, use
-`CITATION.cff`.
+`CITATION.cff`. This release is archived on Zenodo: [10.5281/zenodo.24040591](https://doi.org/10.5281/zenodo.24040591)
+(all versions; v1.0.1 is [10.5281/zenodo.24040592](https://doi.org/10.5281/zenodo.24040592)).
